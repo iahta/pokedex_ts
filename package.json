@@ -1,0 +1,29 @@
+{
+  "name": "pokedex_ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/main.js",
+    "dev": "npx tsc && node dist/main.js",
+    "test": "vitest --run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iahta/pokedex_ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iahta/pokedex_ts/issues"
+  },
+  "homepage": "https://github.com/iahta/pokedex_ts#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
