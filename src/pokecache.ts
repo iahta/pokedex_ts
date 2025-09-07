@@ -19,9 +19,10 @@ export class Cache {
         };
         
         this.#cache.set(key, entry)
+        this.#startReapLoop();
     }
 
-    get<T>(key: string): T | undefined {
+    get<T>(key: string): T | undefined{
         const entry = this.#cache.get(key) as CacheEntry<T> | undefined;
         return entry?.val;
     }
@@ -30,14 +31,14 @@ export class Cache {
         const now = Date.now();
          for (const [key, entry] of this.#cache) {
             const createdAt = entry?.createdAt;
-            if (typeof createdAt === 'number' && createdAt < Date.now() - this.#interval) {
+            if (typeof createdAt === 'number' && createdAt < now- this.#interval) {
                 this.#cache.delete(key);
             };
          };
     }
 
     #startReapLoop() {
-        const intervalID = setInterval(this.#reap, this.#interval);
+        const intervalID = setInterval(() => this.#reap(), this.#interval);
         this.#reapIntervalId = intervalID;
     }
 
