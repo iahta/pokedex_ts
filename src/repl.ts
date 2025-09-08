@@ -1,4 +1,5 @@
 import { commandExit } from './command_exit.js';
+import { commandExplore } from './command_explore.js';
 import { commandHelp } from './command_help.js';
 import { commandMap, commandMapBack } from './command_map.js';
 import type { State, CLICommand } from './state.js';
@@ -24,6 +25,11 @@ export function getCommands(): Record<string, CLICommand> {
             name: "mapb",
             description: "Displays the previous 20 locations",
             callback: commandMapBack,
+        },
+        explore: {
+            name: "explore",
+            description: "Displays a list of pokemon in an area",
+            callback: commandExplore,
         }
     }
 }
@@ -43,12 +49,12 @@ export async function startREPL(state: State) {
         if (output.length === 0) {
             state.rl.prompt();
             return;
-        }
+        } 
         const commandName = output[0];
         const command = state.commands[commandName]
         if (command) {
             try {
-                await command.callback(state);
+                await command.callback(state, ...output.slice(1));
             } catch (err) {
                 console.error("Error running command:", err);
             }

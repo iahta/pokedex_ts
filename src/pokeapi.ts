@@ -44,13 +44,12 @@ export class PokeAPI {
         }
     }
 
-    async fetchLocation(locationName: string): Promise<Location> {
+    async fetchLocation(locationName: string): Promise<Encounters> {
         const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
-        const cached = this.cache.get<Location>(url);
+        const cached = this.cache.get<Encounters>(url);
         if (cached) {
             return {
-                name: cached.name,
-                url: cached.url
+                pokemon_encounters: cached.pokemon_encounters,
             };
         }
         try {
@@ -62,14 +61,12 @@ export class PokeAPI {
             const result = await resp.json();
             this.cache.add(url, result);
             return {
-                name: result.name,
-                url: result.url
-            }
+                pokemon_encounters: result.pokemon_encounters,
+            };
         } catch (error) {
             console.error(error);
             return {
-                name: "",
-                url: ""
+                pokemon_encounters: [],
             };
         }
     }
@@ -83,5 +80,18 @@ export type ShallowLocations = {
 
 export type Location = {
     name: string
+    url: string
+};
+
+export type Encounters = {
+    pokemon_encounters: PokemonEncounter[]
+};
+
+export type PokemonEncounter = {
+    pokemon: Pokemon
+};
+
+export type Pokemon = {
+    name: string,
     url: string
 };
